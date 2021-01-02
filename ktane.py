@@ -1,20 +1,84 @@
 def split(serial_number):
     return [char for char in serial_number]
 
-
+serial_number_validity = 0
+serial_number_elements = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9']
 serial_number = (split((input('Serial number: ').lower())))
+serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
+if len(serial_number) != len(serial_number_element_check):
+    serial_number_validity = 1
+if len(serial_number) != 6:
+    serial_number_validity = 1
+elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+    serial_number_validity = 1
+else:
+    serial_number_validity = 0
+while serial_number_validity == 1:
+    print('That serial number was incorrect: Retry')
+    serial_number = (split((input('Serial number: ').lower())))
+    serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
+    if len(serial_number) != len(serial_number_element_check):
+        serial_number_validity = 1
+    if len(serial_number) != 6:
+        serial_number_validity = 1
+    elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+        serial_number_validity = 1
+    else:
+        serial_number_validity = 0
 serial_number_count = len(serial_number)
-battery_count = int(input('Number of batteries: '))
-lit_indicator_CAR = (input("Lit indicator 'CAR'? (Y/N) ").lower())
-lit_indicator_FRK = (input("Lit indicator 'FRK'? (Y/N) ").lower())
-parallel_port_check = (input('Is there a parallel port? (Y/N) ').lower())
+battery_count_validity = 1
+battery_count = input('Number of batteries: ')
+while battery_count_validity == 1:
+    try:
+        battery_count = int(battery_count)
+        if battery_count > -1:
+            battery_count_validity = 0
+        else:
+            battery_count = input('Invalid input: Retry ')
+    except ValueError:
+        battery_count_validity = 1
+        print('Invalid number of batteries: Retry ')
+        battery_count = input('Number of batteries: ')
+def ynvalid(x):
+    yn_validity = 1
+    while yn_validity == 1:
+        if x == 'y':
+            yn_validity = 0
+        elif x == 'n':
+            yn_validity = 0
+        else:
+            yn_validity = 1
+            x = (input('Invalid input: Retry '))
+    return(x)
+lit_indicator_CAR = ynvalid((input("Lit indicator 'CAR'? (Y/N) ").lower()))
+lit_indicator_FRK = ynvalid((input("Lit indicator 'FRK'? (Y/N) ").lower()))
+parallel_port_check = ynvalid((input('Is there a parallel port? (Y/N) ').lower()))
 
 x = 0
 
 while x == 0:
-    module = input("Which module? [1] Wires, [2] Button, [3] Keypads, [4] Simon Says, [5] Who's on First, [6] Memory, [7] Morse Code, [8] Complicated Wires, [9] Wire Sequences, [10] Mazes, [11] Passwords, [12] Needy Knobs, [n] New Bomb, [x] Exit ")
+    module_validity = 0
+    module = (input("Which module? [1] Wires, [2] Button, [3] Keypads, [4] Simon Says, [5] Who's on First, [6] Memory, [7] Morse Code, [8] Complicated Wires, [9] Wire Sequences, [10] Mazes, [11] Passwords, [12] Needy Knobs, [n] New Bomb, [x] Exit ").lower())
     if module == '1':
         wires = (input('Input wires in order (e.g. white yellow yellow black red) ').split())
+        valid_wires = ['red', 'white', 'blue', 'black', 'yellow', 'red', 'white', 'blue', 'black', 'yellow', 'red', 'white', 'blue', 'black', 'yellow', 'red', 'white', 'blue', 'black', 'yellow', 'red', 'white', 'blue', 'black', 'yellow', 'red', 'white', 'blue', 'black', 'yellow']
+        wires_validity_check = [x for x in wires if x in valid_wires]
+        wires_validity = 0
+        if len(wires) < 3 or len(wires) > 6:
+            wires_validity = 1
+        elif len(wires) != len(wires_validity_check):
+            wires_validity = 1
+        else:
+            wires_validity = 0
+        while wires_validity == 1:
+            wires = (input('Invalid input: Retry ').split())
+            wires_validity_check = [x for x in wires if x in valid_wires]
+            if len(wires) < 3 or len(wires) > 6:
+                wires_validity = 1
+            elif len(wires) != len(wires_validity_check):
+                wires_validity = 1
+            else:
+                wires_validity = 0
         wires_count = len(wires)
         blue_wires = [blue for blue in wires if blue == 'blue']
         blue_wires_count = len(blue_wires)
@@ -67,7 +131,47 @@ while x == 0:
                 print('Cut the fourth wire')
     elif module == '2':
         button_colour = input('What is the colour of the button? (e.g. red) ')
+        def validButton(button_colour):
+            button_colour_split = button_colour.split()
+            button_colour_list = ['white', 'red', 'blue', 'yellow']
+            button_colour_validity_check = [x for x in button_colour_split if x in button_colour_list]
+            if len(button_colour_split) != 1:
+                button_colour_validity = 1
+            elif len(button_colour_validity_check) != 1:
+                button_colour_validity = 1
+            else:
+                button_colour_validity = 0
+            while button_colour_validity == 1:
+                button_colour = input('Invalid input: Retry ')
+                button_colour_split = button_colour.split()
+                button_colour_validity_check = [x for x in button_colour_split if x in button_colour_list]
+                if len(button_colour_split) != 1:
+                    button_colour_validity = 1
+                elif len(button_colour_validity_check) != 1:
+                    button_colour_validity = 1
+                else:
+                    button_colour_validity = 0
+        validButton(button_colour)
         button_text = input('What does the text on the button read? (e.g. hold) ')
+        button_text_split = button_text.split()
+        button_text_list = ['hold', 'press', 'detonate']
+        button_text_validity_check = [x for x in button_text_split if x in button_text_list]
+        if len(button_text_split) != 1:
+            button_text_validity = 1
+        elif len(button_text_validity_check) != 1:
+            button_text_validity = 1
+        else:
+            button_text_validity = 0
+        while button_text_validity == 1:
+            button_text = input('Invalid input: Retry ')
+            button_text_split = button_text.split()
+            button_text_validity_check = [x for x in button_text_split if x in button_text_list]
+            if len(button_text_split) != 1:
+                button_text_validity = 1
+            elif len(button_text_validity_check) != 1:
+                button_text_validity = 1
+            else:
+                button_text_validity = 0
         if battery_count > 1 and button_text == 'detonate':
             print('Press and immediately release the button')
         elif battery_count > 2 and lit_indicator_FRK == 'y':
@@ -77,8 +181,9 @@ while x == 0:
         else:
             print('Hold the button')
             strip_colour = input('What colour is the strip? (e.g. blue) ')
+            validButton(strip_colour)
             if strip_colour == 'blue':
-                print('Release the button when countdown timer has a 4 in any position')
+                print('Release the button when the countdown timer has a 4 in any position')
             elif strip_colour == 'yellow':
                 print('Release the button when the countdown timer has a 5 in any position')
             else:
@@ -124,33 +229,72 @@ while x == 0:
         c4_combined = [d for d in c4 if d in keypads]
         c5_combined = [e for e in c5 if e in keypads]
         c6_combined = [f for f in c6 if f in keypads]
-        if len(c1_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c1_combined)
-        elif len(c2_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c2_combined)
-        elif len(c3_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c3_combined)
-        elif len(c4_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c4_combined)
-        elif len(c5_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c5_combined)
-        elif len(c6_combined) == 4:
-            print('Press the symbols in this order (you may have to refer to the above list):')
-            print(c6_combined)
-        else:
-            print('Error: You may have interpreted the symbols differently')
+        keypads_validity = 1
+        while keypads_validity == 1:
+            if len(c1_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c1_combined)
+            elif len(c2_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c2_combined)
+            elif len(c3_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c3_combined)
+            elif len(c4_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c4_combined)
+            elif len(c5_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c5_combined)
+            elif len(c6_combined) == 4:
+                keypads_validity = 0
+                print('Press the symbols in this order (you may have to refer to the above list):')
+                print(c6_combined)
+            else:
+                keypads = (input('Invalid input: Retry ').split())
+                c1_combined = [a for a in c1 if a in keypads]
+                c2_combined = [b for b in c2 if b in keypads]
+                c3_combined = [c for c in c3 if c in keypads]
+                c4_combined = [d for d in c4 if d in keypads]
+                c5_combined = [e for e in c5 if e in keypads]
+                c6_combined = [f for f in c6 if f in keypads]
     elif module == '4':
         vowel = ['a', 'e', 'i', 'o', 'u']
         vowel_check = [z for z in serial_number if z in vowel]
         strike_count = input('How many strikes? ')
+        strike_count_validity = 1
+        if strike_count == '0':
+            strike_count_validity = 0
+        elif strike_count == '1':
+            strike_count_validity = 0
+        elif strike_count == '2':
+            strike_count_validity = 0
+        else:
+            while strike_count_validity == 1:
+                strike_count = input('Invalid input: Retry ')
+                if strike_count == '0':
+                    strike_count_validity = 0
+                elif strike_count == '1':
+                    strike_count_validity = 0
+                elif strike_count == '2':
+                    strike_count_validity = 0
+        def validFlash(x):
+            valid_flash_list = ['green', 'red', 'yellow', 'blue']
+            flash_split = x.split()
+            flash_validity_check = [z for z in flash_split if z in valid_flash_list]
+            while len(flash_validity_check) != 1:
+                x = input('Invalid input: Retry ')
+                flash_split = x.split()
+                flash_validity_check = [z for z in flash_split if z in valid_flash_list]
         if strike_count == '0':
             if len(vowel_check) > 0:
                 first_flash = input('What colour is the first flash? ')
+                validFlash(first_flash)
                 if first_flash == 'red':
                     ss_list = ['blue']
                 elif first_flash == 'blue':
@@ -164,6 +308,7 @@ while x == 0:
                 print(ss_list)
                 while ss_loop == 'n':
                     next_flash = input('What colour is the new flash? ')
+                    validFlash(next_flash)
                     if next_flash == 'red':
                         ss_list.append('blue')
                     elif next_flash == 'blue':
@@ -174,9 +319,9 @@ while x == 0:
                         ss_list.append('green')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
             elif len(vowel_check) == 0:
-                first_flash = input('What colour is the first flash ?')
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['blue']
                 elif first_flash == 'blue':
@@ -189,7 +334,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('blue')
                     elif next_flash == 'blue':
@@ -200,10 +345,10 @@ while x == 0:
                         ss_list.append('red')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
         elif strike_count == '1':
             if len(vowel_check) > 0:
-                first_flash = input('What colour is the first flash? ')
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['yellow']
                 elif first_flash == 'blue':
@@ -216,7 +361,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('yellow')
                     elif next_flash == 'blue':
@@ -227,9 +372,9 @@ while x == 0:
                         ss_list.append('red')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
             elif len(vowel_check) == 0:
-                first_flash = input('What colour is the first flash? ')
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['red']
                 elif first_flash == 'blue':
@@ -242,7 +387,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('red')
                     elif next_flash == 'blue':
@@ -253,10 +398,10 @@ while x == 0:
                         ss_list.append('green')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
         elif strike_count == '2':
             if len(vowel_check) > 0:
-                first_flash = input('What colour is the first flash? ')
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['green']
                 elif first_flash == 'blue':
@@ -269,7 +414,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('green')
                     elif next_flash == 'blue':
@@ -280,9 +425,9 @@ while x == 0:
                         ss_list.append('blue')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
             elif len(vowel_check) == 0:
-                first_flash = input('What colour is the first flash? ')
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['yellow']
                 elif first_flash == 'blue':
@@ -295,7 +440,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('yellow')
                     elif next_flash == 'blue':
@@ -306,7 +451,7 @@ while x == 0:
                         ss_list.append('red')
                     print('Press: ')
                     print(ss_list)
-                    ss_loop = (input('Has the module finished (Y/N)? ').lower())                
+                    ss_loop = ynvalid((input('Has the module finished (Y/N)? ').lower()))
     elif module == '5':
         ready_list = ['yes', 'okay', 'what', 'middle', 'left', 'press', 'right', 'blank', 'ready', 'no', 'first', 'uhhh', 'nothing', 'wait']
         first_list = ['left', 'okay', 'yes', 'middle', 'no', 'right', 'nothing', 'uhhh', 'wait', 'ready', 'blank', 'what', 'press', 'first']
@@ -336,13 +481,50 @@ while x == 0:
         hold_list = ['you are', 'u', 'done', 'uh uh', 'you', 'ur', 'sure', 'what?', "you're", 'next', 'hold', 'uh huh', 'your', 'like']
         sure_list = ['you are', 'done', 'like', "you're", 'you', 'old', 'uh huh', 'ur', 'sure', 'u', 'what?', 'next', 'your', 'uh uh']
         like_list = ["you're", 'next', 'u', 'ur', 'hold', 'done', 'uh uh', 'what?', 'uh huh', 'you', 'like', 'sure', 'you are', 'your']
-        display_word = input('What does the display read? ')
-        user_options = [input('Top left label: ')]
-        user_options.append(input('Middle left label: '))
-        user_options.append(input('Bottom left label: '))
-        user_options.append(input('Top right label: '))
-        user_options.append(input('Middle right label: '))
-        user_options.append(input('Bottom right label: '))
+        def validWordOptions(x):
+            word_options_list = ['ready','first','no','blank','nothing','yes','what','uhhh','left','right','middle','okay','wait','press','you','you are','your',"you're",'ur','u','uh huh','uh uh','what?','done','next','hold','sure','like']
+            user_options_validity = 1
+            while user_options_validity == 1:
+                if x in word_options_list:
+                    user_options_validity = 0
+                else:
+                    x = input('Invalid input: Retry ')
+                    user_options_validity = 1
+            return(x)
+        display_word = (input("What does the display read? (If there is no word on display, enter a space: ' ') "))
+        display_word_list = ['yes','first','display','okay','says','nothing',' ','blank','no','led','lead','read','red','reed','leed','hold on','you','you are','your',"you're",'ur','there',"they're",'their','cee','c','see','they are']
+        display_word_validity = 1
+        display_word_list_validity = [a for a in display_word_list if a in display_word]
+        while display_word_validity == 1:
+            if len(display_word_list_validity) == 1:
+                display_word_validity = 0
+            else:
+                display_word_validity = 1
+                display_word = input('Invalid input: Retry ')
+                display_word_list_validity = [a for a in display_word_list if a in display_word]
+        user_options = [validWordOptions(input('Top left label: '))]
+        user_options.append(validWordOptions(input('Middle left label: ')))
+        user_options.append(validWordOptions(input('Bottom left label: ')))
+        user_options.append(validWordOptions(input('Top right label: ')))
+        user_options.append(validWordOptions(input('Middle right label: ')))
+        user_options.append(validWordOptions(input('Bottom right label: ')))
+        user_options_list = ['ready','first','no','blank','nothing','yes','what','uhhh','left','right','middle','okay','wait','press','you','you are','your',"you're",'ur','u','uh huh','uh uh','what?','done','next','hold','sure','like']
+        user_options_check_list = [a for a in user_options_list if a in user_options]
+        user_options_list_validity = 1
+        while user_options_list_validity == 1:
+            if len(user_options_check_list) == 6:
+                user_options_list_validity = 0
+            else:
+                user_options_list_validity = 1
+                print('Invalid input: Retry')
+                user_options = [validWordOptions(input('Top left label: '))]
+                user_options.append(validWordOptions(input('Middle left label: ')))
+                user_options.append(validWordOptions(input('Bottom left label: ')))
+                user_options.append(validWordOptions(input('Top right label: ')))
+                user_options.append(validWordOptions(input('Middle right label: ')))
+                user_options.append(validWordOptions(input('Bottom right label: ')))
+                user_options_check_list = [a for a in user_options_list if a in user_options]
+                user_options_list_validity = 1         
         ready_user = [ready for ready in ready_list if ready in user_options]
         first_user = [first for first in first_list if first in user_options]
         no_user = [no for no in no_list if no in user_options]
@@ -888,10 +1070,32 @@ while x == 0:
                 print('Press: ')
                 print(like_user[0])
     elif module == '6':
+        def validMemoryDisplay(x):
+            memory_display_validity = 1
+            memory_display_list = ['1','2','3','4']
+            memory_display_user_list = [a for a in memory_display_list if a in x]
+            while memory_display_validity == 1:
+                if len(memory_display_user_list) == 1:
+                    memory_display_validity = 0
+                else:
+                    x = input('Invalid input: Retry ')
+                    memory_display_user_list = [a for a in memory_display_list if a in x]
+            return(x)
+        def validMemoryOptions(x):
+            memory_options_validity = 1
+            memory_options_list = ['1','2','3','4']
+            memory_options_user_list = [a for a in memory_options_list if a in x]
+            while memory_options_validity == 1:
+                if len(memory_options_user_list) == 4:
+                    memory_options_validity = 0
+                else:
+                    x = (input('Invalid input: Retry ').split())
+                    memory_options_user_list = [a for a in memory_options_list if a in x]
+            return(x)
         labels = []
         positions = []
-        s1_display = input('What number is on the display? ')
-        s1_options = (input('What are the four number options? (e.g. 3 2 4 1) ').split())
+        s1_display = validMemoryDisplay(input('What number is on the display? '))
+        s1_options = validMemoryOptions((input('What are the four number options? (e.g. 3 2 4 1) ').split()))
         if s1_display in ['1', '2']:
             labels.append(s1_options[1])
             positions.append('1')
@@ -907,8 +1111,8 @@ while x == 0:
             positions.append('3')
             print('Press: ')
             print(labels[0])
-        s2_display = input('What number is on the display? ')
-        s2_options = (input('What are the four number options? ').split())
+        s2_display = validMemoryDisplay(input('What number is on the display? '))
+        s2_options = validMemoryOptions((input('What are the four number options? ').split()))
         if s2_display == '1':
             labels.append('4')
             positions.append(str(s2_options.index('4')))
@@ -924,8 +1128,8 @@ while x == 0:
             positions.append('0')
             print('Press: ')
             print(labels[1])
-        s3_display = input('Display: ')
-        s3_options = (input('Options: ').split())
+        s3_display = validMemoryDisplay(input('Display: '))
+        s3_options = validMemoryOptions((input('Options: ').split()))
         if s3_display == '1':
             labels.append(labels[1])
             positions.append(str(s3_options.index(labels[1])))
@@ -946,8 +1150,8 @@ while x == 0:
             positions.append(str(s3_options.index('4')))
             print('Press: ')
             print(labels[2])
-        s4_display = input('Display: ')
-        s4_options = (input('Options: ').split())
+        s4_display = validMemoryDisplay(input('Display: '))
+        s4_options = validMemoryOptions((input('Options: ').split()))
         if s4_display == '1':
             labels.append(s4_options[int(positions[0])])
             positions.append(positions[0])
@@ -963,7 +1167,7 @@ while x == 0:
             positions.append(positions[1])
             print('Press: ')
             print(labels[3])
-        s5_display = input('Display: ')
+        s5_display = validMemoryDisplay(input('Display: '))
         print('Press: ')
         if s5_display == '1':
             print(labels[0])
@@ -1065,6 +1269,19 @@ while x == 0:
         while cw_status == 'n':
             cw_conditions = ['f', 'f', 'f', 'f']
             c_wire = (input('List the features of the wire in any order (e.g. white red star light) ').split())
+            c_wire_list = ['white','red','blue','star','light']
+            c_wire_list_validity = [a for a in c_wire if a in c_wire_list]
+            c_wire_validity = 1
+            while c_wire_validity == 1:
+                if len(c_wire) == len(c_wire_list_validity):
+                    if len(c_wire) > 0:
+                        c_wire_validity = 0
+                    else:
+                        c_wire = (input('Invalid input: Retry ').split())
+                        c_wire_list_validity = [a for a in c_wire if a in c_wire_list]
+                else:
+                    c_wire = (input('Invalid input: Retry ').split())
+                    c_wire_list_validity = [a for a in c_wire if a in c_wire_list]
             if 'red' in c_wire:
                 cw_conditions[0] = 't'
             if 'blue' in c_wire:
@@ -1092,7 +1309,7 @@ while x == 0:
                     print('Next')
             else:
                 print('Next')
-            cw_status = (input('Has the module finished? (Y/N) ').lower())
+            cw_status = ynvalid((input('Has the module finished? (Y/N) ').lower()))
     elif module == '9':
         ws_status = 'n'
         red_count = 0
@@ -1100,6 +1317,12 @@ while x == 0:
         black_count = 0
         while ws_status == 'n':
             wire_sequence_input = (input('Input wire colour and connecting letter (e.g. red b) ').split())
+            wire_sequence_input_validity = 1
+            while wire_sequence_input_validity == 1:
+                if len(wire_sequence_input) == 2 and wire_sequence_input[0] in ['red','black','blue'] and wire_sequence_input[1] in ['a','b','c']:
+                    wire_sequence_input_validity = 0
+                else:
+                    wire_sequence_input = (input('Invalid input: Retry ').split())
             if wire_sequence_input[0] == 'red':
                 red_count += 1
                 if red_count == 1:
@@ -1241,9 +1464,15 @@ while x == 0:
                         print('Next')
                 else:
                     print('Error')
-            ws_status = (input('Has the module finished? (Y/N) ').lower())
+            ws_status = ynvalid((input('Has the module finished? (Y/N) ').lower()))
     elif module == '10':
+        maze_pick_validity = 1
         maze_pick = input('Give the coordinates of any one of the green circles in format x, y (where the bottom left point would be 0, 0) ')
+        while maze_pick_validity == 1:
+            if maze_pick == '1, 5' or maze_pick == '6, 4' or maze_pick == '2, 3' or maze_pick == '5, 5' or maze_pick == '4, 3' or maze_pick == '6, 3' or maze_pick == '1, 6' or maze_pick == '1, 3' or maze_pick == '4, 1' or maze_pick == '5, 4' or maze_pick == '3, 2' or maze_pick == '5, 6' or maze_pick == '2, 1' or maze_pick == '2, 6' or maze_pick == '3, 3' or maze_pick == '4, 6' or maze_pick == '1, 2' or maze_pick == '3, 2':
+                maze_pick_validity = 0
+            else:
+                maze_pick = input('Invalid input: Retry ')
         if maze_pick in ['1, 5', '6, 4']:
             maze = [
                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -1388,11 +1617,23 @@ while x == 0:
                    [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             ]
-        white_light_r = input('White light row number: ')
-        white_light_c = input('White light column number: ')
+        def validMaze(x):
+            maze_position_validity = 1
+            while maze_position_validity == 1:
+                try:
+                    x = int(x)
+                    if 0 < x < 7:
+                        maze_position_validity = 0
+                    else:
+                        x = input('Invalid input: Retry ')
+                except ValueError:
+                    x = input('Invalid input: Retry ')
+            return(x)
+        white_light_r = validMaze(input('White light row number: '))
+        white_light_c = validMaze(input('White light column number: '))
         not_start = ((int(white_light_r)+1)*2)-3,((int(white_light_c)+1)*2)-3
-        red_triangle_r = input('Red triangle row number: ')
-        red_triangle_c = input('Red triangle column number: ')
+        red_triangle_r = validMaze(input('Red triangle row number: '))
+        red_triangle_c = validMaze(input('Red triangle column number: '))
         not_end = ((int(red_triangle_r)+1)*2)-3,((int(red_triangle_c)+1)*2)-3
         start = not_end
         end = not_start
@@ -1461,8 +1702,19 @@ while x == 0:
     elif module == '11':
         password_list = ['about', 'after', 'again', 'below', 'could', 'every', 'first', 'found', 'great', 'house', 'large', 'learn', 'never', 'other', 'place', 'plant', 'point', 'right', 'small', 'sound', 'spell', 'still', 'study', 'their', 'there', 'these', 'thing', 'think', 'three', 'water', 'where', 'which', 'which', 'world', 'would', 'write']
         answer = password_list
+        def validPassword(x):
+            alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+            alphabet_valid = [letter for letter in x if letter in alphabet]
+            letters_validity = 1
+            while letters_validity == 1:
+                if len(alphabet_valid) == 6:
+                    letters_validity = 0
+                else:
+                    x = (input('Invalid input: Retry ').split())
+                    alphabet_valid = [letter for letter in x if letter in alphabet]
+            return(x)
         while len(answer) != 1:
-            user_pos_1 = (input('Enter each possible letter available in the first slot (e.g. a p r x c t) ').split())
+            user_pos_1 = validPassword((input('Enter each possible letter available in the first slot (e.g. a p r x c t) ').split()))
             px = 1
             possibilities_1 = [i for i in password_list if i.startswith(user_pos_1[px - 1])]
             while px < len(user_pos_1):
@@ -1470,7 +1722,7 @@ while x == 0:
                 possibilities_1.extend([i for i in password_list if i.startswith(user_pos_1[px - 1])])
             answer = possibilities_1
             if len(answer) > 1:
-                user_pos_2 = (input('Enter each possible letter available in the second slot (e.g. a p r x c t) ').split())
+                user_pos_2 = validPassword((input('Enter each possible letter available in the second slot (e.g. a p r x c t) ').split()))
                 px = 0
                 possibilities_2 = []
                 t = -1
@@ -1482,7 +1734,7 @@ while x == 0:
                     t = -1
                 answer = possibilities_2
             if len(answer) > 1:
-                user_pos_3 = (input('Enter each possible letter available in the third slot (e.g. a p r x c t) ').split())
+                user_pos_3 = validPassword((input('Enter each possible letter available in the third slot (e.g. a p r x c t) ').split()))
                 px = 0
                 possibilities_3 = []
                 t = -1
@@ -1498,7 +1750,7 @@ while x == 0:
                     u = -1
                 answer = possibilities_3
             if len(answer) > 1:
-                user_pos_4 = (input('Enter each possible letter available in the fourth slot (e.g. a p r x c t) ').split())
+                user_pos_4 = validPassword((input('Enter each possible letter available in the fourth slot (e.g. a p r x c t) ').split()))
                 px = 0
                 possibilities_4 = []
                 t = -1
@@ -1518,7 +1770,7 @@ while x == 0:
                     v = -1
                 answer = possibilities_4
             if len(answer) > 1:
-                user_pos_5 = (input('Enter each possible letter available in the fifth slot (e.g. a p r x c t) ').split())
+                user_pos_5 = validPassword((input('Enter each possible letter available in the fifth slot (e.g. a p r x c t) ').split()))
                 px = 0
                 possibilities_5 = []
                 t = -1
@@ -1578,10 +1830,43 @@ while x == 0:
         def split(serial_number):
             return [char for char in serial_number]
         serial_number = (split((input('Serial number: ').lower())))
+        serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
+        if len(serial_number) != len(serial_number_element_check):
+            serial_number_validity = 1
+        if len(serial_number) != 6:
+            serial_number_validity = 1
+        elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            serial_number_validity = 1
+        else:
+            serial_number_validity = 0
+        while serial_number_validity == 1:
+            print('That serial number was incorrect: Retry')
+            serial_number = (split((input('Serial number: ').lower())))
+            serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
+            if len(serial_number) != len(serial_number_element_check):
+                serial_number_validity = 1
+            if len(serial_number) != 6:
+                serial_number_validity = 1
+            elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+                serial_number_validity = 1
+            else:
+                serial_number_validity = 0
         serial_number_count = len(serial_number)
-        battery_count = int(input('Number of batteries: '))
-        lit_indicator_CAR = (input("Lit indicator 'CAR'? (Y/N) ").lower())
-        lit_indicator_FRK = (input("Lit indicator 'FRK'? (Y/N) ").lower())
-        parallel_port_check = (input('Is there a parallel port? (Y/N) ').lower())
+        battery_count_validity = 1
+        battery_count = input('Number of batteries: ')
+        while battery_count_validity == 1:
+            try:
+                battery_count = int(battery_count)
+                if battery_count > -1:
+                    battery_count_validity = 0
+                else:
+                    battery_count = input('Invalid input: Retry ')
+            except ValueError:
+                battery_count_validity = 1
+                print('Invalid number of batteries: Retry ')
+                battery_count = input('Number of batteries: ')
+        lit_indicator_CAR = ynvalid((input("Lit indicator 'CAR'? (Y/N) ").lower()))
+        lit_indicator_FRK = ynvalid((input("Lit indicator 'FRK'? (Y/N) ").lower()))
+        parallel_port_check = ynvalid((input('Is there a parallel port? (Y/N) ').lower()))
     else:
-        print('Error')
+        print('Error: Invalid input')
