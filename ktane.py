@@ -291,10 +291,10 @@ while x == 0:
                 x = input('Invalid input: Retry ')
                 flash_split = x.split()
                 flash_validity_check = [z for z in flash_split if z in valid_flash_list]
+            return(x)
         if strike_count == '0':
             if len(vowel_check) > 0:
-                first_flash = input('What colour is the first flash? ')
-                validFlash(first_flash)
+                first_flash = validFlash(input('What colour is the first flash? '))
                 if first_flash == 'red':
                     ss_list = ['blue']
                 elif first_flash == 'blue':
@@ -307,8 +307,7 @@ while x == 0:
                 print('Press: ')
                 print(ss_list)
                 while ss_loop == 'n':
-                    next_flash = input('What colour is the new flash? ')
-                    validFlash(next_flash)
+                    next_flash = validFlash(input('What colour is the new flash? '))
                     if next_flash == 'red':
                         ss_list.append('blue')
                     elif next_flash == 'blue':
