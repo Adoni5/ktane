@@ -7,7 +7,7 @@ serial_number = (split((input('Serial number: ').lower())))
 serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
 if len(serial_number) != len(serial_number_element_check):
     serial_number_validity = 1
-if len(serial_number) != 6:
+elif len(serial_number) != 6:
     serial_number_validity = 1
 elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
     serial_number_validity = 1
@@ -19,7 +19,7 @@ while serial_number_validity == 1:
     serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
     if len(serial_number) != len(serial_number_element_check):
         serial_number_validity = 1
-    if len(serial_number) != 6:
+    elif len(serial_number) != 6:
         serial_number_validity = 1
     elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
         serial_number_validity = 1
@@ -91,8 +91,6 @@ while x == 0:
         if wires_count == 3:
             if 'red' not in wires:
                 print('Cut the second wire')
-            elif wires[2] == 'white':
-                print('Cut the last wire')
             elif blue_wires_count > 1:
                 if wires[2] == 'blue':
                     print('Cut the last wire')
@@ -102,7 +100,12 @@ while x == 0:
                 print('Cut the last wire')
         elif wires_count == 4:
             if red_wires_count > 1 and serial_number[(serial_number_count) - 1] in ['1', '3', '5', '7', '9']:
-                print('Cut the last wire')
+                if wires[3] == 'red':
+                    print('Cut the last wire')
+                elif wires[2] == 'red':
+                    print('Cut the third wire')
+                elif wires[1] == 'red':
+                    print('Cut the second wire')
             elif wires[3] == 'yellow' and red_wires_count == 0:
                 print('Cut the first wire')
             elif blue_wires_count == 1:
@@ -1832,7 +1835,7 @@ while x == 0:
         serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
         if len(serial_number) != len(serial_number_element_check):
             serial_number_validity = 1
-        if len(serial_number) != 6:
+        elif len(serial_number) != 6:
             serial_number_validity = 1
         elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
             serial_number_validity = 1
@@ -1844,7 +1847,7 @@ while x == 0:
             serial_number_element_check = [x for x in serial_number if x in serial_number_elements]
             if len(serial_number) != len(serial_number_element_check):
                 serial_number_validity = 1
-            if len(serial_number) != 6:
+            elif len(serial_number) != 6:
                 serial_number_validity = 1
             elif serial_number[len(serial_number) - 1] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
                 serial_number_validity = 1
