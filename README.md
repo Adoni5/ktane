@@ -2,6 +2,7 @@
 
 i tried
 
+if ur expecting efficient code, leave.
 
 
 update:
