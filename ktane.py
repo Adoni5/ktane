@@ -727,7 +727,7 @@ while x == 0:
             elif pick == 'like':
                 print('Press: ')
                 print(like_user[0])
-        elif display_word in ['', 'reed', 'leed', "they're"]:
+        elif display_word in [' ', 'reed', 'leed', "they're"]:
             pick = user_options[2]
             if pick == 'ready':
                 print('Press: ')
